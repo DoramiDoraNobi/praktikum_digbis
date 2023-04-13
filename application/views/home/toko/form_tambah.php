@@ -1,35 +1,25 @@
-<div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">Register</h1>
-            <div class="d-inline-flex">
-                <p class="m-0"><a href="">Home</a></p>
-                <p class="m-0 px-2">-</p>
-                <p class="m-0">Contact</p>
-            </div>
-        </div>
-    </div>
-    <!-- Page Header End -->
-
-
-    <!-- Contact Start -->
-    <div class="container-fluid pt-5">
+<div class="container-fluid pt-5">
         <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Contact For Any Queries</span></h2>
+            <h2 class="section-title px-5"><span class="px-2">Form Tambah Toko</span></h2>
         </div>
         <div class="row px-xl-5">
             <div class="col-lg-7 mb-5">
                 <div class="contact-form">
                     <div id="success"></div>
-                    <form action="<?php echo site_url('main/do_login'); ?>" method="post">
+                    <form action="<?php echo site_url('toko/save'); ?>" method="post" enctype="multipart/form-data">
                         <div class="control-group">
-                            <input type="text" class="form-control" id="name" name="username" placeholder="Your Username"
-                                required="required" data-validation-required-message="Please enter your name" />
+                            <input type="text" class="form-control" id="name" name="namaToko" placeholder="Nama Toko"
+                                required="required" data-validation-required-message="Mohon isi nama Toko mu" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="text" class="form-control" id="password" name="password" placeholder="Your Password"
+                            <input type="file" class="form-control" id="password" name="logo" placeholder="Logo Toko"
                                 required="required" data-validation-required-message="Please enter your password" />
                             <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <textarea name="deskripsi" id="message" cols="30" rows="3"
+                            required="required" data-validation-required-message="Masukkan Deskripsi Toko"></textarea>
                         </div>
                         <div>
                             <button class="btn btn-primary py-2 px-4" type="submit">Submit</button>

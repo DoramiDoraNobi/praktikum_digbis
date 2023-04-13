@@ -105,6 +105,7 @@
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    <?php if(empty($this->session->userdata('Member'))){ ?>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="index.html" class="nav-item nav-link active">Home</a>
@@ -124,6 +125,18 @@
                             <a href="" class="nav-item nav-link">Register</a>
                         </div>
                     </div>
+                    <?php } else {?>
+                        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                            <div class="navbar-nav mr-auto py-0">
+                            <a href="index.html" class="nav-item nav-link active">Beranda</a>
+                            <a href="<?php echo site_url('toko'); ?>" class="nav-item nav-link">Toko</a>
+                            <a href="detail.html" class="nav-item nav-link">Transaksi</a>
+                            </div>
+                            <div class="navbar-nav mr-auto py-0">
+                                <a href="<?php echo site_url('main/logout') ?>" class="nav-item nav-link"></a>
+                            </div>
+                        </div>
+                        <?php } ?>
                 </nav>
                 <?php
                 $loc = $this->uri->segment('1');

@@ -20,7 +20,7 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form">
                     <div id="success"></div>
-                    <form action="<?php echo base_url('main/do_register'); ?>" method="post">
+                    <form action="<?php echo site_url('main/do_register'); ?>" method="post">
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" name="username" placeholder="Your Username"
                                 required="required" data-validation-required-message="Please enter your name" />

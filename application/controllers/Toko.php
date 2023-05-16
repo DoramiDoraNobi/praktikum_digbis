@@ -6,13 +6,16 @@ class Toko extends CI_Controller
     function __construct() {
         parent::__construct();
         $this->load->model('Madmin');
+        $this->load->library('form_validation');
     }
 
     public function index()
     {
         $data['toko'] = $this->Madmin->get_all_data('tbl_toko')->result();
-        $this->load->view('home/layout/header', $data);
-
+        $this->load->view('home/layout/header');
+        $this->load->view('home/toko/index', $data);
+        $this->load->view('home/layout/footer');
+        
     }
     public function add()
     {
@@ -22,6 +25,15 @@ class Toko extends CI_Controller
     }
     public function save()
     {
+        //tambahkan form validasi disini codeigniter 3
+        $this->form_validation->set_rules('namaToko', 'Nama Toko', 'required');
+        $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
+        $this->form_validation->set_rules('logo', 'Logo', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            redirect('toko/add');
+        }
+        //end form validasi
+        
         $id = $this->session->userdata('idKonsumen');
         $nama_toko = $this->input->post('namaToko');
         $deskripsi = $this->input->post('deskripsi');
@@ -36,56 +48,65 @@ class Toko extends CI_Controller
                                 'deskripsi' => $deskripsi,
                                 'statusAktif' => 'Y' );
             $this->Madmin->insert('tbl_toko', $data_insert);
-            redirect('toko')
+            redirect('toko');
         } else {
-            redirect('toko/add')
+            redirect('toko/add');
         }
     }
     public function edit($idToko)
     {
-        $data['toko'] = $this->Madmin->get_where('tbl_toko', array('idToko' => $idToko))->row();
+        $data['toko'] = $this->Madmin->get_by_id('tbl_toko', array('idToko' => $idToko))->row();
         $this->load->view('home/layout/header');
         $this->load->view('home/toko/form_edit', $data);
         $this->load->view('home/layout/footer');
     }
 
     public function update()
-    {
-        $idToko = $this->input->post('idToko');
-        $nama_toko = $this->input->post('namaToko');
-        $deskripsi = $this->input->post('deskripsi');
+{
+    //tambahkan form validasi disini codeigniter 3
+    $this->form_validation->set_rules('namaToko', 'Nama Toko', 'required');
+    $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
+    if ($this->form_validation->run() == FALSE) {
+        redirect('toko/edit/'.$this->input->post('idToko'));
+    }
+    //end form validasi
 
-        $config['upload_path'] = './assets/logo_toko/';
-        $config['allowed_types'] = 'jpg|png|jpeg';
-        $this->load->library('upload', $config);
+    $idToko = $this->input->post('idToko');
+    $nama_toko = $this->input->post('namaToko');
+    $deskripsi = $this->input->post('deskripsi');
 
-        if ($this->upload->do_upload('logo')) {
-             $data_file = $this->upload->data();
-             $data_update = array(
-                'namaToko' => $nama_toko,
-                'logo' => $data_file['file_name'],
-                'deskripsi' => $deskripsi,
-                'statusAktif' => 'Y'
-            );
-        } else {
-            $data_update = array(
-                'namaToko' => $nama_toko,
-                'deskripsi' => $deskripsi,
-                'statusAktif' => 'Y'
-            );
-        }
+    $config['upload_path'] = './assets/logo_toko/';
+    $config['allowed_types'] = 'jpg|png|jpeg';
+    $this->load->library('upload', $config);
 
-        $where = array('idToko' => $idToko);
-        $this->Madmin->update('tbl_toko', $data_update, $where);
-        redirect('toko');
+    if ($this->upload->do_upload('logo')) {
+        $data_file = $this->upload->data();
+        $data_update = array(
+            'namaToko' => $nama_toko,
+            'logo' => $data_file['file_name'],
+            'deskripsi' => $deskripsi,
+            'statusAktif' => 'Y'
+        );
+    } else {
+        $data_update = array(
+            'namaToko' => $nama_toko,
+            'deskripsi' => $deskripsi,
+            'statusAktif' => 'Y'
+        );
     }
 
-    public function delete($idToko)
-    {
-        $where = array('idToko' => $idToko);
-        $this->Madmin->delete('tbl_toko', $where);
-        redirect('toko');
-    }
+    $where = array('idToko' => $idToko);
+    $this->Madmin->update('tbl_toko', $data_update, 'idToko', $idToko);
+    redirect('toko');
+}
+
+public function delete($idToko)
+{
+    $where = array('idToko' => $idToko);
+    $this->Madmin->delete('tbl_toko', 'idToko', $idToko);
+    redirect('toko');
+}
+
 
 }
 

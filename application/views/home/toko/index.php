@@ -31,7 +31,7 @@
                         </div>
                         </td>
                     </tr>
-                    <?php $no++ } ?>
+                    <?php $no++; } ?>
                 </tbody>
             </table>
         </div>

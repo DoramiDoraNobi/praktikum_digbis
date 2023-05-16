@@ -2,7 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Main extends CI_Controller {
-	
+	//tambahkan fungsi construct
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Madmin');
+        $this->load->library('form_validation');
+    }
 	public function index()
 	{
 		$this->load->view('home/layout/header');
@@ -18,6 +24,7 @@ class Main extends CI_Controller {
     }
     public function do_register()
     {
+    
     // ambil data dari form register
     $data['username'] = $this->input->post('username');
     $data['password'] = md5($this->input->post('password')); // encrypt password dengan md5
@@ -33,7 +40,7 @@ class Main extends CI_Controller {
 
     // tampilkan pesan sukses dan redirect ke halaman login
     $this->session->set_flashdata('success', 'Registrasi berhasil! Silahkan login.');
-    redirect('login');
+    redirect('main/login');
     }
 
     public function login()
@@ -44,16 +51,21 @@ class Main extends CI_Controller {
     }
 
     public function do_login()
-    {
+{
+    //form validation
+    $this->form_validation->set_rules('username', 'Username', 'required');
+    $this->form_validation->set_rules('password', 'Password', 'required');
+
     // ambil data dari form login
     $username = $this->input->post('username');
     $password = md5($this->input->post('password')); // encrypt password dengan md5
 
     // panggil model untuk cek data login di database
     $this->load->model('Madmin');
-    $member = $this->Madmin->get('tbl_member', ['username' => $username, 'password' => $password]);
+    $cek = $this->Madmin->cek_loginMember($username, $password)->num_rows();
+    $member = $this->Madmin->cek_loginMember($username, $password)->row_object();
 
-    if ($member) { // jika data ditemukan
+    if ($cek == 1) { // jika data ditemukan
         if ($member->statusAktif == 'Y') { // jika statusAktif = Y, bisa login
             // set session data dan redirect ke halaman dashboard
             $this->session->set_userdata('logged_in', true);
@@ -62,13 +74,14 @@ class Main extends CI_Controller {
             redirect('dashboard');
         } else { // jika statusAktif = N, tidak bisa login
             $this->session->set_flashdata('error', 'Akun Anda belum aktif. Silahkan tunggu konfirmasi dari admin.');
-            redirect('login');
+            redirect('main/login');
         }
     } else { // jika data tidak ditemukan
         $this->session->set_flashdata('error', 'Username atau password salah.');
-        redirect('login');
+        redirect('main/login');
     }
-    }
+}
+
     
     public function logout()
     {

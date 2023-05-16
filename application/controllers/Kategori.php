@@ -5,6 +5,8 @@ class kategori extends CI_Controller
      function __construct() {
         parent::__construct();
         $this->load->model('Madmin');
+        $this->load->library('form_validation');
+
     }
 
     public function index()
@@ -28,11 +30,22 @@ class kategori extends CI_Controller
     }
     public function save()
     {
-        $namaKat = $this->input->post('namaKat');
-        $dataInput = array('namaKat' => $namaKat);
-        $this->Madmin->insert('tbl_kategori', $dataInput);
-        redirect('kategori');
+        $this->form_validation->set_rules('namaKat', 'Nama Kategori', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('admin/layout/header');
+            $this->load->view('admin/layout/menu');
+            $this->load->view('admin/kategori/formAdd');
+            $this->load->view('admin/layout/footer');
+        }
+        else {
+            $namaKat = $this->input->post('namaKat');
+            $dataInput = array('namaKat' => $namaKat);
+            $this->Madmin->insert('tbl_kategori', $dataInput);
+            redirect('kategori');
+        }
     }
+
+    
     public function get_by_id($id)
     {
         $dataWhere = array('idkat' => $id);
@@ -45,11 +58,20 @@ class kategori extends CI_Controller
     }
     public function edit()
     {
-        $id = $this->input->post('id');
-        $namaKategori = $this->input->post('namaKat');
-        $dataUpdate = array('namaKat' => $namaKategori);
-        $this->Madmin->update('tbl_kategori', $dataUpdate, 'idKat', $id);
-        redirect('kategori');
+        $this->form_validation->set_rules('namaKat', 'Nama Kategori', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('admin/layout/header');
+            $this->load->view('admin/layout/menu');
+            $this->load->view('admin/kategori/formEdit');
+            $this->load->view('admin/layout/footer');
+        }
+        else {
+            $id = $this->input->post('id');
+            $namaKat = $this->input->post('namaKat');
+            $dataUpdate = array('namaKat' => $namaKat);
+            $this->Madmin->update('tbl_kategori', $dataUpdate, 'idkat', $id);
+            redirect('kategori');
+        }
     }
     public function delete($id)
     {

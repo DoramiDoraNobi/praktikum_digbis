@@ -16,6 +16,7 @@ class Main extends CI_Controller {
 		$this->load->view('home/home');
 		$this->load->view('home/layout/footer');
 	}
+   
     public function register()
     {
         $this->load->view('home/layout/header');
@@ -24,7 +25,6 @@ class Main extends CI_Controller {
     }
     public function do_register()
     {
-    
     // ambil data dari form register
     $data['username'] = $this->input->post('username');
     $data['password'] = md5($this->input->post('password')); // encrypt password dengan md5
@@ -71,7 +71,7 @@ class Main extends CI_Controller {
             $this->session->set_userdata('logged_in', true);
             $this->session->set_userdata('member_id', $member->idMember);
             $this->session->set_userdata('member_username', $member->username);
-            redirect('dashboard');
+            redirect('main/home');
         } else { // jika statusAktif = N, tidak bisa login
             $this->session->set_flashdata('error', 'Akun Anda belum aktif. Silahkan tunggu konfirmasi dari admin.');
             redirect('main/login');
@@ -90,6 +90,27 @@ class Main extends CI_Controller {
     $this->session->unset_userdata('member_id');
     $this->session->unset_userdata('member_username');
     redirect('login');
+    }
+    //tambahkan fungsi edit profile dan update profile untuk member yang login
+    public function edit_profile()
+    {
+        $id = $this->session->userdata('member_id');
+        $data['member'] = $this->Madmin->get_by_id('tbl_member', array('idMember'=>$id))->row_object();
+        $this->load->view('home/layout/header');
+        $this->load->view('home/edit_profile', $data);
+        $this->load->view('home/layout/footer');
+    }
+    public function update_profile()
+    {
+        $id = $this->session->userdata('member_id');
+        $data['username'] = $this->input->post('username');
+        $data['namaKonsumen'] = $this->input->post('namaKonsumen');
+        $data['alamat'] = $this->input->post('alamat');
+        $data['email'] = $this->input->post('email');
+        $data['tlpn'] = $this->input->post('tlpn');
+        $this->Madmin->update('tbl_member', $data, 'idMember', $id);
+        $this->session->set_flashdata('success', 'Data berhasil diupdate.');
+        redirect('main/home');
     }
 
 

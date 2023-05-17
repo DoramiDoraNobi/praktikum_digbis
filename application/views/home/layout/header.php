@@ -132,6 +132,8 @@
                             <a href="index.html" class="nav-item nav-link active">Beranda</a>
                             <a href="<?php echo site_url('toko'); ?>" class="nav-item nav-link">Toko</a>
                             <a href="detail.html" class="nav-item nav-link">Transaksi</a>
+                            <a href="<?php echo site_url('main/edit_profile/'.$this->session->userdata('member_id')); ?>" class="nav-item nav-link">Edit Profile</a>
+
                             </div>
                             <div class="navbar-nav mr-auto py-0">
                                 <a href="<?php echo site_url('main/logout') ?>" class="nav-item nav-link"></a>

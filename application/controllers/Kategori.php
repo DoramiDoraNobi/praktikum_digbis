@@ -48,6 +48,7 @@ class kategori extends CI_Controller
     
     public function get_by_id($id)
     {
+
         $dataWhere = array('idkat' => $id);
         $data['kategori'] = $this->Madmin->get_by_id('tbl_kategori', $dataWhere)->row_object();
         $this->load->view('admin/layout/header');
@@ -60,12 +61,13 @@ class kategori extends CI_Controller
     {
         $this->form_validation->set_rules('namaKat', 'Nama Kategori', 'required');
         if ($this->form_validation->run() == FALSE) {
+            $id = $this->input->post('id');
+            $data['kategori'] = $this->Madmin->get_by_id('tbl_kategori', array('idkat' => $id))->row_object();
             $this->load->view('admin/layout/header');
             $this->load->view('admin/layout/menu');
-            $this->load->view('admin/kategori/formEdit');
+            $this->load->view('admin/kategori/formEdit', $data);
             $this->load->view('admin/layout/footer');
-        }
-        else {
+        } else {
             $id = $this->input->post('id');
             $namaKat = $this->input->post('namaKat');
             $dataUpdate = array('namaKat' => $namaKat);
@@ -73,6 +75,8 @@ class kategori extends CI_Controller
             redirect('kategori');
         }
     }
+
+
     public function delete($id)
     {
         $this->Madmin->delete('tbl_kategori', 'idkat', $id);

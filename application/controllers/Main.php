@@ -71,15 +71,15 @@ class Main extends CI_Controller {
         // Form validation
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
-
+    
         // Ambil data dari form login
         $username = $this->input->post('username');
         $password = $this->input->post('password');
-
+    
         // Panggil model untuk cek data login di database
         $this->load->model('Madmin');
-        $member = $this->Madmin->cek_loginMember($username)->row();
-
+        $member = $this->Madmin->cek_loginMember($username, $password)->row();
+    
         if ($member) { // Jika data ditemukan
             if (password_verify($password, $member->password)) { // Jika password cocok
                 if ($member->statusAktif == 'Y') { // Jika statusAktif = Y, bisa login

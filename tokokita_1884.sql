@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2023 at 06:10 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.0.25
+-- Generation Time: May 21, 2023 at 08:33 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,7 +38,7 @@ CREATE TABLE `tbl_admin` (
 --
 
 INSERT INTO `tbl_admin` (`idAdmin`, `userName`, `password`) VALUES
-(1, 'admin', 'admin');
+(1, 'admin', '$2y$10$vKD4MjjsPB4vxc5of7x0q.4XkTx/Vpq94tH0qdSUEC/GrygSrmdYu');
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,9 @@ CREATE TABLE `tbl_kategori` (
 
 INSERT INTO `tbl_kategori` (`idkat`, `namaKat`) VALUES
 (1, 'Komputer'),
-(2, 'Fashion');
+(2, 'Fashion'),
+(5, 'Laptop'),
+(6, 'Pisang');
 
 -- --------------------------------------------------------
 
@@ -90,6 +92,15 @@ CREATE TABLE `tbl_member` (
   `tlpn` int(20) DEFAULT NULL,
   `statusAktif` enum('Y','N') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_member`
+--
+
+INSERT INTO `tbl_member` (`idKonsumen`, `username`, `password`, `namaKonsumen`, `alamat`, `idKota`, `email`, `tlpn`, `statusAktif`) VALUES
+(1, 'lolipanda', 'c6940299625868c049f98eac917b4852', 'lolipanda', 'lolipanda', NULL, 'lolipanda@test.com', 9323232, 'Y'),
+(2, 'user1', '$2y$10$cl5/Jc/JJcB39ZTMv7NZ3.WWLE4RD4jewzzTOwmieWWSlesI.Nbjy', 'user1', 'user1', NULL, 'user1@test.com', 9323232, 'Y'),
+(3, 'user2', '$2y$10$Hk.bYaSxFcwof3qtXRqGs.cFj9a/QkRktYGK6mX9UKVNrTCTA/TtC', 'user2', 'user2', NULL, 'user2@test.com', 9323245, 'Y');
 
 -- --------------------------------------------------------
 
@@ -207,13 +218,13 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_kategori`
 --
 ALTER TABLE `tbl_kategori`
-  MODIFY `idkat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idkat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_member`
 --
 ALTER TABLE `tbl_member`
-  MODIFY `idKonsumen` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `idKonsumen` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_order`

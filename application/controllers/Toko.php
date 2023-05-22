@@ -28,7 +28,6 @@ class Toko extends CI_Controller
         //tambahkan form validasi disini codeigniter 3
         $this->form_validation->set_rules('namaToko', 'Nama Toko', 'required');
         $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
-        $this->form_validation->set_rules('logo', 'Logo', 'required');
         if ($this->form_validation->run() == FALSE) {
             redirect('toko/add');
         }

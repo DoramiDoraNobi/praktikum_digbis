@@ -27,12 +27,12 @@
                     <div id="success"></div>
                     <form action="<?php echo site_url('main/do_login'); ?>" method="post">
                         <div class="control-group">
-                            <input type="text" class="form-control" id="name" name="username" placeholder="Your Username"
+                            <input type="text" class="form-control" name="username" placeholder="Your Username"
                                 required="required" data-validation-required-message="Please enter your username" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="text" class="form-control" id="password" name="password" placeholder="Your Password"
+                            <input type="text" class="form-control" name="password" placeholder="Your Password"
                                 required="required" data-validation-required-message="Please enter your password" />
                             <p class="help-block text-danger"></p>
                         </div>

@@ -66,42 +66,64 @@ class Main extends CI_Controller {
     $this->load->view('home/layout/footer');
     }
 
-    public function do_login()
+    public function home()
     {
-        // Form validation
-        $this->form_validation->set_rules('username', 'Username', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
-    
-        // Ambil data dari form login
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-    
-        // Panggil model untuk cek data login di database
-        $this->load->model('Madmin');
-        $member = $this->Madmin->cek_loginMember($username, $password)->row();
-    
-        if ($member) { // Jika data ditemukan
-            if (password_verify($password, $member->password)) { // Jika password cocok
-                if ($member->statusAktif == 'Y') { // Jika statusAktif = Y, bisa login
-                    // Set session data dan redirect ke halaman dashboard
-                    $this->session->set_userdata('logged_in', true);
-                    $this->session->set_userdata('member_id', $member->idMember);
-                    $this->session->set_userdata('member_username', $member->username);
-                    redirect('main/home');
-                } else { // Jika statusAktif = N, tidak bisa login
-                    $this->session->set_flashdata('error', 'Akun Anda belum aktif. Silahkan tunggu konfirmasi dari admin.');
-                    redirect('main/login');
-                }
-            } else { // Jika password tidak cocok
-                $this->session->set_flashdata('error', 'Username atau password salah.');
-                redirect('main/login');
-            }
-        } else { // Jika data tidak ditemukan
-            $this->session->set_flashdata('error', 'Username atau password salah.');
-            redirect('main/login');
-        }
+    $this->load->view('home/layout/header1');
+    $this->load->view('home/layanan');
+    $this->load->view('home/home');
+    $this->load->view('home/layout/footer');
     }
 
+    //buat fungsi untuk login dengan form validation, password_hash dan password_verify dan session
+    public function do_login()
+    {
+        // Load library form validation
+        $this->load->library('form_validation');
+
+        // Set rules for form validation
+        $this->form_validation->set_rules('username', 'Username', 'required');
+        $this->form_validation->set_rules('password','Password','required');
+
+        if ($this->form_validation->run() == FALSE) {
+            // Jika validasi form gagal, tampilkan kembali halaman login
+            $this->load->view('home/login');
+        } else {
+            // Ambil data dari form login
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+
+            // Load model Madmin
+            $this->load->model('Madmin');
+
+            // Ambil data admin dari database
+            $member = $this->Madmin->get_by_id('tbl_member', array('username' => $username));
+
+            // Cek apakah data admin ada dalam database
+            if ($member->num_rows() > 0) {
+                // Ambil data admin dari database
+                $member = $member->row();
+
+                // Cek apakah password yang dimasukkan sesuai dengan password admin di database
+                if (password_verify($password, $member->password)) {
+                    // Buat session
+                    $this->session->set_userdata('logged_in', TRUE);
+                    $this->session->set_userdata('member_id', $member->idKonsumen);
+                    $this->session->set_userdata('member_username', $member->username);
+
+                    // Redirect ke halaman dashboard
+                    redirect('main/home');
+                } else {
+                    // Password salah
+                    $this->session->set_flashdata('error', 'Password salah');
+                    redirect('main/login');
+                }
+            } else {
+                // Username tidak ada
+                $this->session->set_flashdata('error', 'Username tidak terdaftar');
+                redirect('main/login');
+            }
+        }
+    }
     
     public function logout()
     {
@@ -111,11 +133,11 @@ class Main extends CI_Controller {
     $this->session->unset_userdata('member_username');
     redirect('main/login');
     }
-    //tambahkan fungsi edit profile dan update profile untuk member yang login
+
     public function edit_profile()
     {
         $id = $this->session->userdata('member_id');
-        $data['member'] = $this->Madmin->get_by_id('tbl_member', array('idMember'=>$id))->row_object();
+        $data['member'] = $this->Madmin->get_by_id('tbl_member', array('idKonsumen'=>$id))->row_object();
         $this->load->view('home/layout/header');
         $this->load->view('home/edit_profile', $data);
         $this->load->view('home/layout/footer');
@@ -128,7 +150,7 @@ class Main extends CI_Controller {
         $data['alamat'] = $this->input->post('alamat');
         $data['email'] = $this->input->post('email');
         $data['tlpn'] = $this->input->post('tlpn');
-        $this->Madmin->update('tbl_member', $data, 'idMember', $id);
+        $this->Madmin->update('tbl_member', $data, 'idKonsumen', $id);
         $this->session->set_flashdata('success', 'Data berhasil diupdate.');
         redirect('main/home');
     }

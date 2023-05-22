@@ -29,7 +29,7 @@
               <!-- /.card-header -->
               <!-- form start -->
                 <form class="form-horizontal" method="post" action="<?php echo site_url('main/update_profile') ?>">
-                <input type="hidden" name="id" value="<?php echo $member->idMember; ?>">
+                <input type="hidden" name="id" value="<?php echo $member->idKonsumen; ?>">
                 <div class="card-body">
                 <div class="form-group">
                     <input type="text" name="username" value="<?php echo $member->username; ?>" class="form-control" placeholder="Username">

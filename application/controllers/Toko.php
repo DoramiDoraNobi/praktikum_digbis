@@ -33,7 +33,7 @@ class Toko extends CI_Controller
         }
         //end form validasi
         
-        $id = $this->session->userdata('idKonsumen');
+        $id = $this->input->post('idKonsumen');
         $nama_toko = $this->input->post('namaToko');
         $deskripsi = $this->input->post('deskripsi');
         $config['upload_path'] = './assets/logo_toko/';

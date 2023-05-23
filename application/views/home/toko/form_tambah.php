@@ -7,6 +7,7 @@
                 <div class="contact-form">
                     <div id="success"></div>
                     <form action="<?php echo site_url('toko/save'); ?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="idKonsumen" value="<?php echo $this->session->userdata('member_id'); ?>">
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" name="namaToko" placeholder="Nama Toko"
                                 required="required" data-validation-required-message="Mohon isi nama Toko mu" />

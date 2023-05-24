@@ -32,6 +32,7 @@ class kategori extends CI_Controller
     {
         $this->form_validation->set_rules('namaKat', 'Nama Kategori', 'required');
         if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('message', 'Nama Kategori Harap Diisi');
             $this->load->view('admin/layout/header');
             $this->load->view('admin/layout/menu');
             $this->load->view('admin/kategori/formAdd');
@@ -61,6 +62,7 @@ class kategori extends CI_Controller
     {
         $this->form_validation->set_rules('namaKat', 'Nama Kategori', 'required');
         if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('message', 'Nama Kategori Harap Diisi');
             $id = $this->input->post('id');
             $data['kategori'] = $this->Madmin->get_by_id('tbl_kategori', array('idkat' => $id))->row_object();
             $this->load->view('admin/layout/header');

@@ -32,18 +32,23 @@
                 <input type="hidden" name="id" value="<?php echo $member->idKonsumen; ?>">
                 <div class="card-body">
                 <div class="form-group">
+                  <label for="exampleInputEmail1">Username</label>
                     <input type="text" name="username" value="<?php echo $member->username; ?>" class="form-control" placeholder="Username">
                 </div>
                 <div class="form-group">
+                <label for="exampleInputEmail1">Nama</label>
                     <input type="text" name="namaKonsumen" value="<?php echo $member->namaKonsumen; ?>" class="form-control" placeholder="Nama Konsumen">
                 </div>
                 <div class="form-group">
+                <label for="exampleInputEmail1">Alamat</label>
                     <input type="text" name="alamat" value="<?php echo $member->alamat; ?>" class="form-control" placeholder="Alamat">
                 </div>
                 <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
                     <input type="text" name="email" value="<?php echo $member->email; ?>" class="form-control" placeholder="Email">
                 </div>
                 <div class="form-group">
+                <label for="exampleInputEmail1">Telepon</label>
                     <input type="text" name="tlpn" value="<?php echo $member->tlpn; ?>" class="form-control" placeholder="Telepon">
                 </div>
                 </div>

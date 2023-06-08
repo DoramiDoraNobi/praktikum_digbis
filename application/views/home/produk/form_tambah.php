@@ -1,6 +1,6 @@
 <div class="container-fluid pt-5">
         <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Form Tambah Toko</span></h2>
+            <h2 class="section-title px-5"><span class="px-2">Form Tambah Produk</span></h2>
         </div>
         <div class="row px-xl-5">
             <div class="col-lg-7 mb-5">
@@ -13,6 +13,7 @@
                             <option value="<?php echo $val->idkat; ?>"><?php echo $val->namaKat; ?></option>
                         <?php } ?>
                     </select>
+                    <br>
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" name="namaProduk" placeholder="Nama Produk"
                                 required="required" data-validation-required-message="Mohon isi nama Toko mu" />

@@ -21,7 +21,7 @@ class Produk extends  CI_Controller
     public function add($idToko)
     {
         $data['idToko'] = $idToko;
-        $data['kategori'] = $this->Madmin->get_all('tbl_kategori')->result();
+        $data['kategori'] = $this->Madmin->get_all_data('tbl_kategori')->result();
         $this->load->view('home/layout/header');
         $this->load->view('home/produk/form_tambah', $data);
         $this->load->view('home/layout/footer');
@@ -48,7 +48,7 @@ class Produk extends  CI_Controller
             'foto' => $data_file['file_name'],
             'deskripsiProduk' => $deskripsi
         );
-        $this->Madmin->insert_data('tbl_produk', $data_insert);
+        $this->Madmin->insert('tbl_produk', $data_insert);
         redirect('produk/index/'.$idToko);
        } else {
         redirect('produk/add/'.$idToko);
@@ -58,7 +58,9 @@ class Produk extends  CI_Controller
     {
         $datawhere = array('idProduk' => $idProduk);
         $data['produk'] = $this->Madmin->get_by_id('tbl_produk', $datawhere)->row();
-        $data['kategori'] = $this->Madmin->get_all('tbl_kategori')->result();
+        $data['kategori'] = $this->Madmin->get_all_data('tbl_kategori')->result();
+        $data['idProduk'] = $idProduk;
+        $data['idToko'] = $data['produk']->idToko;
         $this->load->view('home/layout/header');
         $this->load->view('home/produk/form_edit', $data);
         $this->load->view('home/layout/footer');
@@ -86,7 +88,7 @@ class Produk extends  CI_Controller
             'deskripsiProduk' => $deskripsi
         );
         $where = array('idProduk' => $idProduk);
-        $this->Madmin->update_data('tbl_produk', $data_update, $where);
+        $this->Madmin->update('tbl_produk', $data_update, $where);
         redirect('produk/index/'.$this->input->post('idToko'));
        } else {
         $data_update = array('idKat' => $idKategori,
@@ -97,16 +99,17 @@ class Produk extends  CI_Controller
             'deskripsiProduk' => $deskripsi
         );
         $where = array('idProduk' => $idProduk);
-        $this->Madmin->update_data('tbl_produk', $data_update, $where);
+        $this->Madmin->update('tbl_produk', $data_update, $where);
         redirect('produk/index/'.$this->input->post('idToko'));
        }
     }
     public function delete($idProduk, $idToko)
     {
-        $datawhere = array('idProduk' => $idProduk);
-        $this->Madmin->delete_data('tbl_produk', $datawhere);
+        $where = array('idProduk' => $idProduk);
+        $this->Madmin->delete('tbl_produk', $where);
         redirect('produk/index/'.$idToko);
     }
+    
 }
 
 ?>

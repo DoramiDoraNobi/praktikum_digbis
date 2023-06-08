@@ -4,7 +4,7 @@
     </div>
     <div class="row px-xl-5">
         <div class="col-lg-12 mb-5">
-            <a href="<?php echo site_url('toko/add') ?>" class="btn btn-sm btn-info float-left">Tambah Toko</a>
+            <a href="<?php echo site_url('produk/add/'.$idToko) ?>" class="btn btn-sm btn-info float-left">Tambah Produk</a>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -21,7 +21,7 @@
                 <tbody>
                     <?php
                     $no=1;
-                    foreach ($toko as $val) { ?>
+                    foreach ($produk as $val) { ?>
                     <tr>
                         <th scope="row"><?php echo $no; ?></th>
                         <td><?php echo $val->namaProduk; ?></td>
@@ -33,8 +33,7 @@
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <a href="<?php echo site_url('produk/edit/'.$val->idProduk) ?>" class="btn btn-secondary">Edit</a>
-                            <a href="<?php echo site_url('produk/delete/'.$val->idProduk) ?>" class="btn btn-secondary" onclick="return confirm('Apakah anda yakin ingin menghapus produk ini?')">Delete</a>
-                            
+                            <a href="<?php echo base_url('produk/delete/'.$idToko.'/'.$val->idProduk); ?>" class="btn btn-danger">Delete</a>
                         </div>
                         </td>
                     </tr>

@@ -25,12 +25,12 @@
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Data Kategori</h3>
-                <?php if ($this->session->flashdata('message')): ?>
+              </div>
+              <?php if ($this->session->flashdata('message')): ?>
                   <div class="alert alert-danger">
                     <?php echo $this->session->flashdata('message'); ?>
                   </div>
                 <?php endif ?>
-              </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form class="form-horizontal" method="post" action="<?php echo site_url('kategori/save') ?>">

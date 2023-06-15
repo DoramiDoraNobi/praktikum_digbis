@@ -32,8 +32,9 @@
                         <td><?php echo $val->deskripsiProduk; ?></td>
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="<?php echo site_url('produk/edit/'.$val->idProduk) ?>" class="btn btn-secondary">Edit</a>
-                            <a href="<?php echo base_url('produk/delete/'.$idToko.'/'.$val->idProduk); ?>" class="btn btn-danger">Delete</a>
+                            //link edit dan hapus produk berdasarkan idProduk dan URI segment 4
+                            <a href="<?php echo site_url('produk/edit/'.$val->idProduk.'/'.$idToko) ?>" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="<?php echo site_url('produk/delete/'.$val->idProduk.'/'.$idToko) ?>" class="btn btn-sm btn-danger">Hapus</a>
                         </div>
                         </td>
                     </tr>

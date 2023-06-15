@@ -11,9 +11,11 @@ class Main extends CI_Controller {
     }
 	public function index()
 	{
-		$this->load->view('home/layout/header');
+        $data['produk'] = $this->Madmin->get_all_data('tbl_produk')->result();
+        $data['kategori'] = $this->Madmin->get_all_data('tbl_kategori')->result();
+		$this->load->view('home/layout/header', $data);
 		$this->load->view('home/layanan');
-		$this->load->view('home/home');
+		$this->load->view('home/home', $data);
 		$this->load->view('home/layout/footer');
 	}
    
@@ -36,7 +38,7 @@ class Main extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             // Jika validasi form gagal, tampilkan kembali halaman registrasi dengan pesan error
-            $this->load->view('register');
+            $this->load->view('toko/register');
         } else {
             // Ambil data dari form register
             $data['username'] = $this->input->post('username');
@@ -68,7 +70,9 @@ class Main extends CI_Controller {
 
     public function home()
     {
-    $this->load->view('home/layout/header1');
+    $data['produk'] = $this->Madmin->get_all_data('tbl_produk')->result();
+    $data['kategori'] = $this->Madmin->get_all_data('tbl_kategori')->result();
+	$this->load->view('home/layout/header1', $data);
     $this->load->view('home/layanan');
     $this->load->view('home/home');
     $this->load->view('home/layout/footer');

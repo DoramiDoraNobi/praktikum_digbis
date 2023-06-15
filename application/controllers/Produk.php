@@ -67,6 +67,11 @@ class Produk extends  CI_Controller
     }
     public function update()
     {
+        //function update dengan URI segment 4
+        $idProduk = $this->uri->segment(4);
+        $idToko = $this->uri->segment(5);
+        //post idProduk
+        $idToko = $this->input->post('idToko');
         $idProduk = $this->input->post('idProduk');
         $idKategori = $this->input->post('kategori');
         $namaProduk = $this->input->post('namaProduk');
@@ -77,37 +82,49 @@ class Produk extends  CI_Controller
         $config['upload_path'] = './assets/foto_produk/';
         $config['allowed_types'] = 'jpg|png|jpeg';
         $this->load->library('upload', $config);
-       if ($this->upload->do_upload('gambar')) {
-        $data_file = $this->upload->data();
-        $data_update = array('idKat' => $idKategori,
-            'namaProduk' => $namaProduk,
-            'harga' => $hargaProduk,
-            'stok' => $jumlahProduk,
-            'berat' => $beratProduk,
-            'foto' => $data_file['file_name'],
-            'deskripsiProduk' => $deskripsi
-        );
-        $where = array('idProduk' => $idProduk);
-        $this->Madmin->update('tbl_produk', $data_update, $where);
-        redirect('produk/index/'.$this->input->post('idToko'));
-       } else {
-        $data_update = array('idKat' => $idKategori,
-            'namaProduk' => $namaProduk,
-            'harga' => $hargaProduk,
-            'stok' => $jumlahProduk,
-            'berat' => $beratProduk,
-            'deskripsiProduk' => $deskripsi
-        );
-        $where = array('idProduk' => $idProduk);
-        $this->Madmin->update('tbl_produk', $data_update, $where);
-        redirect('produk/index/'.$this->input->post('idToko'));
-       }
+        if ($this->upload->do_upload('gambar')) {
+            $data_file = $this->upload->data();
+            $data_update = array('idKat' => $idKategori,
+                'namaProduk' => $namaProduk,
+                'harga' => $hargaProduk,
+                'stok' => $jumlahProduk,
+                'berat' => $beratProduk,
+                'foto' => $data_file['file_name'],
+                'deskripsiProduk' => $deskripsi
+            );
+            $where = array('idProduk' => $idProduk);
+            $this->Madmin->update('tbl_produk', $data_update, 'idProduk', $idProduk);
+            redirect('produk/index/'.$idToko);
+        } else {
+            $data_update = array('idKat' => $idKategori,
+                'namaProduk' => $namaProduk,
+                'harga' => $hargaProduk,
+                'stok' => $jumlahProduk,
+                'berat' => $beratProduk,
+                'deskripsiProduk' => $deskripsi
+            );
+            $where = array('idProduk' => $idProduk);
+            $this->Madmin->update('tbl_produk', $data_update, $where);
+            redirect('produk/index/'.$idToko);
+        }
     }
     public function delete($idProduk, $idToko)
     {
-        $where = array('idProduk' => $idProduk);
-        $this->Madmin->delete('tbl_produk', $where);
-        redirect('produk/index/'.$idToko);
+       
+        $idToko = $this->uri->segment(4);
+	    $this->Madmin->delete('tbl_produk', 'idProduk', $idProduk);
+	    redirect('produk/index/'.$idToko);
+        
+    }
+    //function detail produk
+    public function detail($idProduk)
+    {
+        $datawhere = array('idProduk' => $idProduk);
+        $data['produk'] = $this->Madmin->get_by_id('tbl_produk', $datawhere)->row_object();
+        $data['kategori'] = $this->Madmin->get_all_data('tbl_kategori')->result();
+        $this->load->view('home/layout/header');
+        $this->load->view('home/produk/detail', $data);
+        $this->load->view('home/layout/footer');
     }
     
 }

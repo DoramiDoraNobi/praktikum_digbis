@@ -6,7 +6,7 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form">
                     <div id="success"></div>
-                    <form action="<?php echo site_url('produk/save'); ?>" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo site_url('produk/update'); ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="idToko" value="<?php echo $idToko; ?>">
                     <input type="hidden" name="idProduk" value="<?php echo $idProduk; ?>">
                     <select name="kategori" id="" class="form-control">

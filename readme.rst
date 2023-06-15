@@ -8,6 +8,7 @@ Terima Kasih.
 Para Kontributor :
 - PencoliHandal
 (Nama Kalian Disini Jika Kalian Sudah Berkontribusi)
+```
 Traktir Gua di : 
 https://saweria.co/mickeyLolP12
-```
+
